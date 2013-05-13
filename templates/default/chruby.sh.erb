@@ -1,0 +1,6 @@
+source /usr/local/chruby/share/chruby/chruby.sh
+export RUBIES=(
+<%= puts ::File.exists? "/opt/chef/embedded" ? "/opt/chef/embedded" : nil %>
+<%= puts node['chruby']['use_rvm'] == true ? "~/.rvm/rubies/*" : nil %>
+<%= puts node['chruby']['use_rbenv'] == true ? "~/.rbenv/versions/*" : nil %>
+)
