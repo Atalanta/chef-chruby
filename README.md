@@ -5,7 +5,11 @@ Installs the Chruby utility for changing between Ruby versions.  Chruby is a vas
 # Requirements
 
 - Depends on the `ark` cookbook and the `ruby-build` cookbook.
-- Tested on Centos 6.4 only, so far.
+- Tested on:
+  - CentOS 6.3 and 6.4
+  - CentOS 5.8
+  - Ubuntu 12.04
+  - Ubuntu 10.04
 
 # Usage
 
