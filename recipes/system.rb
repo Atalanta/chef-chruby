@@ -1,8 +1,4 @@
-#
-# Cookbook Name:: chruby
-# Recipe:: default
-#
-# Copyright (C) 2013 Atalanta Systems Ltd
+# Copyright 2013, Atalanta Systems Ltd
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,15 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+include_recipe "ruby_build"
 
-include_recipe "ark"
-
-ark "chruby" do
-  url "https://github.com/postmodern/chruby/archive/v0.3.4.tar.gz"
-  action :install_with_make
+node['chruby']['rubies'].each do |rb|
+  ruby_build_ruby rb do
+    prefix_path "/opt/rubies/#{rb}"
+  end
 end
 
-template "/etc/profile.d/chruby.sh" do
-  source "chruby.sh.erb"
-  mode "0644"
-end
+include_recipe "chruby"
