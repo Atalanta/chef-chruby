@@ -1,18 +1,21 @@
 source /usr/local/chruby/share/chruby/chruby.sh
 <%= node['chruby']['auto_switch'] && "/usr/local/chruby/share/chruby/auto.sh" %>
-export RUBIES=(
-<% if ::File.exists?("/opt/rubies") -%>
-/opt/rubies/*
-<% end -%>
-<% if ::File.exists?("$HOME/.rubies") -%>
-"$HOME/.rubies/*"
-<% end -%>
 <% if ::File.exists?("/opt/chef/embedded") -%>
-/opt/chef/embedded
+RUBIES+=(/opt/chef/embedded)
 <% end -%>
-<%= node['chruby']['use_rvm'] && "$HOME/.rvm/rubies/*" %>
-<%= node['chruby']['use_rbenv'] && "$HOME/.rbenv/versions/*" %>
-)
+
+<% if node['chruby']['use_rvm'] -%>
+<% unless Dir["~/.rubies/*"].empty? -%>
+RUBIES+=($HOME/.rvm/rubies/*)
+<% end -%>
+<% end -%>
+
+<% if node['chruby']['use_rbenv'] -%>
+<% unless Dir["~/.rbenv/versions/*"].empty? -%>
+RUBIES+=($HOME/.rbenv/rubies/*)
+<% end -%>
+<% end -%>
+
 <% if ::File.exists?("/opt/chef/embedded") and node['chruby']['default'] == "embedded" -%>
 chruby embedded
 <% else -%>
