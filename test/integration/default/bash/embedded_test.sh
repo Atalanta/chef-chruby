@@ -1,0 +1,1 @@
+echo "The test passed!"
