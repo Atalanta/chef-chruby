@@ -1,6 +1,8 @@
 # chruby cookbook
 
-Installs the Chruby utility for changing between Ruby versions.  Chruby is a vastly simplified rbenv - it's about 90 lines of code, and very easy to understand.
+Installs the Chruby utility for changing between Ruby versions.
+Chruby is a vastly simplified rbenv - it's about 90 lines of code, and
+very easy to understand.
 
 # Requirements
 
@@ -13,7 +15,20 @@ Installs the Chruby utility for changing between Ruby versions.  Chruby is a vas
 
 # Usage
 
-Include the `chruby` recipe in your run list.  This will make the chruby tool available to every shell, and make the embedded Ruby from the Omnibus install available for use.
+Include the `chruby` recipe in your run list.  This will make the
+chruby tool available to every shell, and make the embedded Ruby from
+the Omnibus install available for use.
+
+Chruby uses `ruby-build` to make Ruby versions available on the OS.
+The attribute `node['chruby']['rubies']` is an array of Ruby versions
+to install using the LWRP provided by the `ruby_build` cookbook.
+
+Set this attribute either in a role, or using a wrapper cookbook.  For example:
+
+```
+node.set['chruby']['rubies'] = ["1.9.3-p429"]
+```
+
 
 # Attributes
 
