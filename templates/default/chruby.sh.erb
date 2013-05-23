@@ -4,16 +4,12 @@ source /usr/local/chruby/share/chruby/chruby.sh
 RUBIES+=(/opt/chef/embedded)
 <% end -%>
 
-<% if node['chruby']['use_rvm'] -%>
-<% unless Dir["~/.rubies/*"].empty? -%>
+<% if node['chruby']['use_rvm'] && ! Dir["~/.rubies/*"].empty? -%>
 RUBIES+=($HOME/.rvm/rubies/*)
 <% end -%>
-<% end -%>
 
-<% if node['chruby']['use_rbenv'] -%>
-<% unless Dir["~/.rbenv/versions/*"].empty? -%>
+<% if node['chruby']['use_rbenv'] && ! Dir["~/.rbenv/versions/*"].empty? -%>
 RUBIES+=($HOME/.rbenv/rubies/*)
-<% end -%>
 <% end -%>
 
 <% if ::File.exists?("/opt/chef/embedded") and node['chruby']['default'] == "embedded" -%>
