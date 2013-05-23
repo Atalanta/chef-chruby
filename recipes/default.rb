@@ -19,7 +19,7 @@
 include_recipe "ark"
 
 ark "chruby" do
-  url "https://github.com/postmodern/chruby/archive/v0.3.4.tar.gz"
+  url "https://github.com/postmodern/chruby/archive/v#{node['chruby']['version']}.tar.gz"
   action :install_with_make
 end
 
