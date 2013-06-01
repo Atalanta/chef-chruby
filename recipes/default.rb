@@ -23,6 +23,12 @@ ark "chruby" do
   action :install_with_make
 end
 
+# Workaround for Github issue 5 https://github.com/Atalanta/chef-chruby/issues/5
+
+link "/usr/local/chruby" do
+  to "/usr/local/chruby-1" 
+end 
+
 template "/etc/profile.d/chruby.sh" do
   source "chruby.sh.erb"
   mode "0644"
