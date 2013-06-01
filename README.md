@@ -29,6 +29,7 @@ Set this attribute either in a role, or using a wrapper cookbook.  For example:
 node.set['chruby']['rubies'] = ["1.9.3-p429"]
 ```
 
+Ensure you set an explicit dependency on the `chruby` cookbook if you are using a wrapper cookbook.
 
 # Attributes
 
