@@ -14,9 +14,11 @@
 #
 include_recipe "ruby_build"
 
-node['chruby']['rubies'].each do |rb|
-  ruby_build_ruby rb do
-    prefix_path "/opt/rubies/#{rb}"
+node['chruby']['rubies'].each do |ruby, flag|
+  if flag
+    ruby_build_ruby rb do
+      prefix_path "/opt/rubies/#{ruby}"
+    end   
   end
 end
 

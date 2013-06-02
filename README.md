@@ -20,14 +20,36 @@ chruby tool available to every shell, and make the embedded Ruby from
 the Omnibus install available for use.
 
 Chruby uses `ruby-build` to make Ruby versions available on the OS.
-The attribute `node['chruby']['rubies']` is an array of Ruby versions
-to install using the LWRP provided by the `ruby_build` cookbook.
 
-Set this attribute either in a role, or using a wrapper cookbook.  For example:
+The version to build are defined in the node attribute `node['chruby']['rubies']`
+
+This is a hash of Ruby versions, with a boolean flag, specifying whether the version should be installed.
+
+For example, the cookbook default says:
+
+    default['chruby']['rubies'] = {'1.9.3-p392' => true}
+
+If you want to disable this, set the value to false in a role or a wrapper cookbook.  For a role:
 
 ```
-node.set['chruby']['rubies'] = ["1.9.3-p429"]
+default_attributes(
+  "chruby" => {
+    "rubies" => {
+      "1.9.3-p392" => false,
+      "1.9.3-p429" => true
+    },
+    "default" => "1.9.3-p429"
+  }
+)
 ```
+
+For a wrapper cookbook:
+
+```
+node.set['chruby']['rubies'] = { "1.9.3-p392" => false, "1.9.3-p429" => true }
+```
+
+These Ruby versions are installed using the LWRP provided by the `ruby_build` cookbook.
 
 Ensure you set an explicit dependency on the `chruby` cookbook if you are using a wrapper cookbook.
 
@@ -38,7 +60,7 @@ Ensure you set an explicit dependency on the `chruby` cookbook if you are using 
 - `node['chruby']['use_rvm_rubies']` - make Rubies installed using RVM available to chruby.
 - `node['chruby']['use_rbenv_rubies']` - make Rubies installed using Rbenv available to chruby.
 - `node['chruby']['auto_switch']` - enable automatic switching between Ruby versions per https://github.com/postmodern/chruby#auto-switching
-- `node['chruby']['rubies']` - an array of Rubies to install using the `ruby-build` LWRP, and make available to chruby.
+- `node['chruby']['rubies']` - an hash of Rubies / Booleans values to install using the `ruby-build` LWRP, and make available to chruby.
 - `node['chruby']['default']` - specify the default Ruby version for every shell.
  
 # Recipes
@@ -53,7 +75,7 @@ Builds and makes available the Ruby versions listed in the `node['chruby']['rubi
 
 # Author and License
 
-Author:: [Stephen Nelson-Smith][lordcope] (<stephen@atalanta-systems.com>)
+- Author: Stephen Nelson-Smith (LordCope) - Atalanta Systems Ltd (<cookbooks@atalanta-systems.com>)
 
 Copyright 2013, Atalanta Systems Ltd 
 
