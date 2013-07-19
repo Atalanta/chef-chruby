@@ -29,6 +29,10 @@ link "/usr/local/chruby" do
   to "/usr/local/chruby-1" 
 end 
 
+directory "/etc/profile.d" do
+  recursive true
+end
+
 template "/etc/profile.d/chruby.sh" do
   source "chruby.sh.erb"
   mode "0644"
