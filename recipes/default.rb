@@ -26,14 +26,18 @@ end
 # Workaround for Github issue 5 https://github.com/Atalanta/chef-chruby/issues/5
 
 link "/usr/local/chruby" do
-  to "/usr/local/chruby-1" 
-end 
-
-directory "/etc/profile.d" do
-  recursive true
+  to "/usr/local/chruby-1"
 end
 
-template "/etc/profile.d/chruby.sh" do
+sh_owner = node['chruby']['sh_owner']
+
+directory node['chruby']['sh_dir'] do
+  recursive true
+  owner sh_owner if sh_owner
+end
+
+template File.join(node['chruby']['sh_dir'], node['chruby']['sh_name']) do
   source "chruby.sh.erb"
   mode "0644"
+  owner sh_owner if sh_owner
 end
