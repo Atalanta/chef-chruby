@@ -62,7 +62,8 @@ Ensure you set an explicit dependency on the `chruby` cookbook if you are using 
 - `node['chruby']['auto_switch']` - enable automatic switching between Ruby versions per https://github.com/postmodern/chruby#auto-switching
 - `node['chruby']['rubies']` - an hash of Rubies / Booleans values to install using the `ruby-build` LWRP, and make available to chruby.
 - `node['chruby']['default']` - specify the default Ruby version for every shell.
- 
+- `node['chruby']['user_rubies']` - an array of directories containing custom rubies
+
 # Recipes
 
 ## Default
@@ -77,7 +78,7 @@ Builds and makes available the Ruby versions listed in the `node['chruby']['rubi
 
 - Author: Stephen Nelson-Smith (LordCope) - Atalanta Systems Ltd (<cookbooks@atalanta-systems.com>)
 
-Copyright 2013, Atalanta Systems Ltd 
+Copyright 2013, Atalanta Systems Ltd
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

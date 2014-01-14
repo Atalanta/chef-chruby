@@ -12,6 +12,10 @@ RUBIES+=($HOME/.rvm/rubies/*)
 RUBIES+=($HOME/.rbenv/rubies/*)
 <% end -%>
 
+<% node['chruby']['user_rubies'].each do |directory| -%>
+RUBIES+=(<%= directory.sub(/\/\z/, '') %>/*)
+<% end -%>
+
 <% if ::File.exists?("/opt/chef/embedded") and node['chruby']['default'] == "embedded" -%>
 chruby embedded
 <% elsif node['chruby']['default'] -%>
