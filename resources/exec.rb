@@ -1,4 +1,4 @@
-# Copyright 2013, Atalanta Systems Ltd
+# Copyright 2014, Bloomberg Finance L.P.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,23 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-#
-include_recipe "ruby_build"
 
-node['chruby']['rubies'].each do |ruby, flag|
-  if flag
-    ruby_build_ruby ruby do
-      prefix_path ::File.join(node['chruby']['install_prefix'], ruby)
-    end   
+actions :run
+default_action :run
 
-    node['chruby']['default_gems'].each do |gem, version|
-      chruby_gem gem do
-        version version
-        ruby ruby
-      end
-    end
+attribute :command, :kind_of => String, :name_attribute => true
+attribute :ruby, :kind_of => String
 
-  end
+def initialize(*args)
+  super
 end
 
-include_recipe "chruby"
+def to_s
+  "#{super} (#{command} with #{ruby})"
+end
