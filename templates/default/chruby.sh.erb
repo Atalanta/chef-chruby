@@ -4,11 +4,11 @@ source /usr/local/chruby/share/chruby/chruby.sh
 RUBIES+=(/opt/chef/embedded)
 <% end -%>
 
-<% if node['chruby']['use_rvm'] && ! Dir["~/.rubies/*"].empty? -%>
+<% if node['chruby']['use_rvm_rubies'] && ! Dir["~/.rubies/*"].empty? -%>
 RUBIES+=($HOME/.rvm/rubies/*)
 <% end -%>
 
-<% if node['chruby']['use_rbenv'] && ! Dir["~/.rbenv/versions/*"].empty? -%>
+<% if node['chruby']['use_rbenv_rubies'] && ! Dir["~/.rbenv/versions/*"].empty? -%>
 RUBIES+=($HOME/.rbenv/rubies/*)
 <% end -%>
 
@@ -23,4 +23,3 @@ chruby <%= node['chruby']['default'] %>
 <% end -%>
 
 <%= node['chruby']['auto_switch'] && "source /usr/local/chruby/share/chruby/auto.sh" %>
-
