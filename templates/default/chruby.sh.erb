@@ -1,4 +1,4 @@
-source /usr/local/chruby/share/chruby/chruby.sh
+source /usr/local/share/chruby/chruby.sh
 
 <% if ::File.exists?("/opt/chef/embedded") -%>
 RUBIES+=(/opt/chef/embedded)
@@ -22,5 +22,4 @@ chruby embedded
 chruby <%= node['chruby']['default'] %>
 <% end -%>
 
-<%= node['chruby']['auto_switch'] && "source /usr/local/chruby/share/chruby/auto.sh" %>
-
+<%= node['chruby']['auto_switch'] && "source /usr/local/share/chruby/auto.sh" %>
