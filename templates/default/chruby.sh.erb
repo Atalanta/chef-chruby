@@ -1,5 +1,9 @@
 source /usr/local/chruby/share/chruby/chruby.sh
 
+<% if ::File.exists?("/opt/chefdk/embedded") -%>
+RUBIES+=(/opt/chefdk/embedded)
+<% end -%>
+
 <% if ::File.exists?("/opt/chef/embedded") -%>
 RUBIES+=(/opt/chef/embedded)
 <% end -%>
@@ -16,7 +20,7 @@ RUBIES+=($HOME/.rbenv/rubies/*)
 RUBIES+=(<%= directory.sub(/\/\z/, '') %>/*)
 <% end -%>
 
-<% if ::File.exists?("/opt/chef/embedded") and node['chruby']['default'] == "embedded" -%>
+<% if (::File.exists?("/opt/chef/embedded") or ::File.exists?("/opt/chefdk/embedded")) and node['chruby']['default'] == "embedded" -%>
 chruby embedded
 <% elsif node['chruby']['default'] -%>
 chruby <%= node['chruby']['default'] %>
