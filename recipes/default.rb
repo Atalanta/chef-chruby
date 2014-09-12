@@ -16,17 +16,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-include_recipe "ark"
+repo_path = "#{Chef::Config["file_cache_path"]}/chruby"
+execute "Install chruby" do
+  cwd repo_path
+  command %{sudo make install}
 
-ark "chruby" do
-  url "https://github.com/postmodern/chruby/archive/v#{node['chruby']['version']}.tar.gz"
-  action :install_with_make
+  action :nothing
 end
 
-# Workaround for Github issue 5 https://github.com/Atalanta/chef-chruby/issues/5
+git repo_path do
+  repository node["chruby"]["git_url"]
+  reference "v#{node["chruby"]["version"]}"
 
-link "/usr/local/chruby" do
-  to "/usr/local/chruby-1"
+  action :sync
+
+  notifies :run, resources(execute: "Install chruby"), :immediately
 end
 
 sh_owner = node['chruby']['sh_owner']

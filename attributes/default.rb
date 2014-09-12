@@ -1,4 +1,5 @@
-default['chruby']['version'] = '0.3.4'
+default['chruby']['version'] = '0.3.8'
+default['chruby']['git_url'] = 'https://github.com/postmodern/chruby.git'
 default['chruby']['gpg_check'] = false
 default['chruby']['use_rvm_rubies'] = false
 default['chruby']['use_rbenv_rubies'] = false
