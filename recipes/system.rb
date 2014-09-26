@@ -18,7 +18,7 @@ node['chruby']['rubies'].each do |ruby, flag|
   if flag
     ruby_build_ruby ruby do
       prefix_path "/opt/rubies/#{ruby}"
-    end   
+    end
   end
 end
 
