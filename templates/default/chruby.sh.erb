@@ -1,3 +1,5 @@
+[ -n "$BASH_VERSION" ] || [ -n "$ZSH_VERSION" ] || return
+
 source /usr/local/chruby/share/chruby/chruby.sh
 
 <% if ::File.exists?("/opt/chefdk/embedded") -%>
