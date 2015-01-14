@@ -1,4 +1,4 @@
-default['chruby']['version'] = '0.3.4'
+default['chruby']['version'] = '0.3.9'
 default['chruby']['gpg_check'] = false
 default['chruby']['use_rvm_rubies'] = false
 default['chruby']['use_rbenv_rubies'] = false
