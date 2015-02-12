@@ -1,3 +1,7 @@
+<% if node['chruby']['shell'] -%>
+#!<%= node['chruby']['shell'] -%>
+<% end -%>
+
 source /usr/local/chruby/share/chruby/chruby.sh
 
 <% if ::File.exists?("/opt/chefdk/embedded") -%>
