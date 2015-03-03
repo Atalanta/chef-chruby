@@ -3,6 +3,7 @@
 # Recipe:: default
 #
 # Copyright (C) 2013 Atalanta Systems Ltd
+# Copyright (C) 2014, 2015 Bloomberg Finance L.P.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,29 +16,29 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-include_recipe "ark"
+include_recipe 'libarchive::default'
 
-ark "chruby" do
-  url "https://github.com/postmodern/chruby/archive/v#{node['chruby']['version']}.tar.gz"
-  action :install_with_make
+archive = remote_file node['chruby']['source_url'] % { version: node['chruby']['version'] } do
+  checksum node['chruby']['source_checksum']
 end
 
-# Workaround for Github issue 5 https://github.com/Atalanta/chef-chruby/issues/5
-
-link "/usr/local/chruby" do
-  to "/usr/local/chruby-1"
-end
-
-sh_owner = node['chruby']['sh_owner']
-
-directory node['chruby']['sh_dir'] do
+directory node['chruby']['install_path'] do
   recursive true
-  owner sh_owner if sh_owner
 end
 
-template File.join(node['chruby']['sh_dir'], node['chruby']['sh_name']) do
-  source "chruby.sh.erb"
-  mode "0644"
-  owner sh_owner if sh_owner
+libarchive_file File.basename(archive.path) do
+  path archive.path
+  extract_to File.join(node['chruby']['install_path'], node['chruby']['version'])
+  action :extract
+end
+
+execute "make install --prefix #{node['chruby']['prefix_path']}" do
+  cwd File.join(node['chruby']['install_path'], node['chruby']['version'])
+end
+
+template '/etc/profile.d/chruby.sh' do
+  source 'chruby.sh.erb'
+  only_if { node['chruby']['sh_profile'] }
 end

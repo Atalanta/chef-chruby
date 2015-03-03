@@ -1,22 +1,16 @@
-source /usr/local/chruby/share/chruby/chruby.sh
+#!/bin/sh
+[ -z "$BASH_VERSION" ] && [ -z "$ZSH_VERSION" ] && exit 0
 
-<% if ::File.exists?("/opt/chef/embedded") -%>
-RUBIES+=(/opt/chef/embedded)
+source '<%= node['chruby']['prefix_path'] %>/share/chruby/chruby.sh'
+
+<% if node['chruby']['sh_rubies'] -%>
+export RUBIES=(<%= node['chruby']['sh_rubies'].join(' ') %>)
 <% end -%>
 
-<% if node['chruby']['use_rvm'] && ! Dir["~/.rubies/*"].empty? -%>
-RUBIES+=($HOME/.rvm/rubies/*)
+<% if node['chruby']['sh_auto_switch'] -%>
+source '<%= node['chruby']['prefix_path'] %>/share/chruby/auto.sh'
 <% end -%>
 
-<% if node['chruby']['use_rbenv'] && ! Dir["~/.rbenv/versions/*"].empty? -%>
-RUBIES+=($HOME/.rbenv/rubies/*)
+<% if node['chruby']['sh_default_ruby'] -%>
+chruby '<%= node['chruby']['sh_default_ruby'] %>'
 <% end -%>
-
-<% if ::File.exists?("/opt/chef/embedded") and node['chruby']['default'] == "embedded" -%>
-chruby embedded
-<% elsif node['chruby']['default'] -%>
-chruby <%= node['chruby']['default'] %>
-<% end -%>
-
-<%= node['chruby']['auto_switch'] && "source /usr/local/chruby/share/chruby/auto.sh" %>
-

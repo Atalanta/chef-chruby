@@ -1,11 +1,13 @@
-name             "chruby"
-maintainer       "Atalanta Systems Ltd"
-maintainer_email "support@atalanta-systems.com"
-license          "Apache 2.0"
-description      "Installs/Configures chruby"
-long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.2.1"
-depends		 "ark"
-depends		 "ruby_build"
-supports	 "centos"
-supports	 "ubuntu"
+name 'chruby'
+maintainer 'Bloomberg Finance L.P.'
+maintainer_email 'webops@bloomberg.net'
+license 'Apache 2.0'
+description 'Installs/configures chruby'
+long_description 'Installs/configures chruby'
+version '1.0.0'
+
+depends 'libarchive'
+
+supports 'centos'
+supports 'redhat'
+supports 'ubuntu'
