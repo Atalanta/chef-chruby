@@ -56,6 +56,7 @@ Ensure you set an explicit dependency on the `chruby` cookbook if you are using 
 # Attributes
 
 - `node['chruby']['version']` - the version of Chruby to install.  Default is 0.3.4.
+- `node['chruby']['checksum']` - the SHA256 checksum of the archive downloaded from github; allows to avoid downloading from Github at every Chef run. Default is `nil` (mainly for backward compatibility with existing wrapper cookbooks)
 - TODO: `node['chruby']['gpg_check']` - run the GPG check to verify the release was not tampered with.
 - `node['chruby']['use_rvm_rubies']` - make Rubies installed using RVM available to chruby.
 - `node['chruby']['use_rbenv_rubies']` - make Rubies installed using Rbenv available to chruby.
